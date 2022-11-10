@@ -1,19 +1,40 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <Header></Header>
+    <StuList v-if="scene == 1"></StuList>
+    <DetailList v-if="scene == 2"></DetailList>
+    <AddStu v-if="scene == 3"></AddStu>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Header from "./components/Header.vue";
+import StuList from "./components/StuList.vue";
+import DetailList from "./components/DetailList.vue";
+import AddStu from "./components/AddStu.vue";
 
 export default {
-  name: 'App',
+  name: "App",
+  mounted() {
+    // 绑定自定义事件
+    this.$bus.$on("changeScene", (data) => {
+      this.scene = data;
+      // console.log("我是TestB组件，收到了数据", this.scene);
+    });
+  },
+  data() {
+    return {
+      scene: 1,
+    };
+  },
   components: {
-    HelloWorld
-  }
-}
+    Header,
+    StuList,
+    DetailList,
+    AddStu,
+  },
+  methods: {},
+};
 </script>
 
 <style>
@@ -23,6 +44,8 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  /* margin-top: 60px; */
+  width: 1000px;
+  margin: 0 auto;
 }
 </style>
